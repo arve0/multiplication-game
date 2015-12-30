@@ -1,37 +1,41 @@
+import seedrandom from 'seedrandom'  // predictable seeded random
+
 /**
  * Create a simple x*y multiplication question.
  *
- * @param {float} seed - Seed from Math.random(). Range should be [0, 1).
  * @param {int} min - Minimum of x and y. Default 0.
  * @param {int} max - Maximum of x and y. Default 10.
  * @returns {Object} - With props question (text) and answer (int).
  */
-const createQuestion = (seed, min=0, max=10) => {
-  max += 1  // seed [0,1)
-  seed = seed * (max - min) + min
-  const x = parseInt(seed)
-  seed = (seed - x) * (max - min) + min
-  const y = parseInt(seed)
+let rng = seedrandom()  // autoseed from time, dom state and entropy
+const createQuestion = (min=0, max=10) => {
+  let random = rng()
+  max += 1  // random [0,1)
+  random = random * (max - min) + min
+  const x = parseInt(random)
+  random = (random - x) * (max - min) + min
+  const y = parseInt(random)
   return { question: `${x} x ${y}`,
            answer: x * y }
 }
 
 const questionInitialState = {
   question: '',
-  answer: 0
+  answer: 0,
+  seed: null,
+  i: 0
 }
 const question = (state = questionInitialState, action) => {
   switch (action.type) {
+    case 'SEED_QUESTION':
+      rng = seedrandom(action.seed)
+      return { ...state, seed: action.seed }
     case 'CREATE_QUESTION':
-      return createQuestion(action.seed)
-    case 'ANSWER':
-        const i = parseInt(action.answer)
-        if (i === state.answer) {
-          return createQuestion(Math.random())  // FIXME: Move random to component
-        }
+      return { ...state, ...createQuestion(), i: state.i + 1 }
     default:
       return state
   }
 }
+
 
 export default {question}

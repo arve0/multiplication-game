@@ -28,10 +28,7 @@ const Answer = Radium(class Answer extends Component {
   changeHandler(e) {
     const val = parseInt(e.target.value.trim())
     if (val === this.props.answer) {
-      this.props.dispatch({
-        type: 'ANSWER',
-        answer: val
-      })
+      this.props.dispatch({ type: 'CREATE_QUESTION' })
       this.refs.input.value = ''
     }
   }
