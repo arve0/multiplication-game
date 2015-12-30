@@ -37,5 +37,16 @@ const question = (state = questionInitialState, action) => {
   }
 }
 
+const scoreInitialState = {
+  points: 0
+}
+const score = (state = scoreInitialState, action) => {
+  switch (action.type) {
+    case 'CORRECT_ANSWER':
+      return { ...state, points: state.points + 10 }
+    default:
+      return state
+  }
+}
 
-export default {question}
+export default { question, score }

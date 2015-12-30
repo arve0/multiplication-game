@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Question from './Question.js'
 import Answer from './Answer.js'
+import Score from './Score.js'
 import { connect } from 'react-redux'
 
 const style = {
@@ -32,6 +33,7 @@ class App extends Component {
       <div className="App" style={style}>
         <Question/>
         <Answer/>
+        <Score/>
       </div>
     )
   }
