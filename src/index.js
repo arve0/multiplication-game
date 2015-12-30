@@ -11,6 +11,4 @@ import reducers from './reducers.js'
 const reducer = combineReducers(reducers)
 const store = createStore(reducer)
 
-store.dispatch({type: 'CREATE_QUESTION', seed: Math.random()})
-
 render(<Provider store={store}><App/></Provider>, document.getElementById('root'))
