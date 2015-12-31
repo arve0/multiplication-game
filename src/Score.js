@@ -9,12 +9,15 @@ class Score extends Component {
     this.state = {}
   }
   render() {
-    setTimeout(this.forceUpdate.bind(this), 1000)  // remove animation class
-    const state = this.state
     const points = this.props.points
     let className = 'Score'
-    className += (state.points == points) ? ' Score--enter' : ''
-    this.state.points = points
+
+    // remove animation class
+    if (points != 0 && this.state.points != points) {
+      className += ' Score--bounce'
+      setTimeout(() => this.setState({points: points}), 820)
+    }
+
     return <div className={className}>
       Score: {points}
     </div>
