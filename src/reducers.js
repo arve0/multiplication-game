@@ -9,12 +9,9 @@ import seedrandom from 'seedrandom'  // predictable seeded random
  */
 let rng = seedrandom()  // autoseed from time, dom state and entropy
 const createQuestion = (min=0, max=10) => {
-  let random = rng()
   max += 1  // random [0,1)
-  random = random * (max - min) + min
-  const x = parseInt(random)
-  random = (random - x) * (max - min) + min
-  const y = parseInt(random)
+  const x = parseInt(rng() * (max - min) + min)
+  const y = parseInt(rng() * (max - min) + min)
   return { question: `${x} x ${y}`,
            answer: x * y }
 }
@@ -38,12 +35,28 @@ const question = (state = questionInitialState, action) => {
 }
 
 const scoreInitialState = {
+  correct: 0,
+  wrong: 0,
+  subsequentCorrect: 1,
+  diff: 0,
   points: 0
 }
 const score = (state = scoreInitialState, action) => {
   switch (action.type) {
     case 'CORRECT_ANSWER':
-      return { ...state, points: state.points + 10 }
+      return {
+        ...state,
+        correct: state.correct + 1,
+        diff: action.inc,
+        points: state.points + action.inc,
+        subsequentCorrect: state.subsequentCorrect + 1 }
+
+    case 'WRONG_ANSWER':
+      return { ...state,
+        diff: 0,
+        subsequentCorrect: 1,
+        wrong: state.wrong + 1 }
+
     default:
       return state
   }

@@ -1,20 +1,36 @@
 .Score {
   font-size: 20px;
-  border: 1px solid #000;
-  border-radius: 2px;
-  color: #fff;
-  background-color: #000;
   position: fixed;
   left: 2px;
   bottom: 2px;
-  padding: 5px;
-  // https://stackoverflow.com/questions/23372903/hide-spinner-in-input-number-firefox-29
-  -moz-appearance:textfield;
 }
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.Score-points {
+  display: block;
+  float: left;
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #000;
+  color: #fff;
+}
+.Score-diff {
+  display: block;
+  float: left;
+  margin-left: 10px;
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #008000;
+  color: #fff;
+  opacity: 0.01;
+}
+.Score-diff--wrong {
+  background-color: #ff0000;
+}
+.Score--fade {
+  animation: Score-keyframes--fade 0.8s;
+}
+@keyframes Score-keyframes--fade {
+  0% { opacity: 1 }
+  100% { opacity: 0.01 }
 }
 .Score--bounce {
   animation: Score-keyframes--bounce 0.8s ease-out;

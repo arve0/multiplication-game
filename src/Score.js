@@ -1,25 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Animated from './Animated.js'
 import './Score.less'
 
-class Score extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-  render() {
-    const points = this.props.points
-    let className = 'Score'
 
-    // remove animation class
-    if (points != 0 && this.state.points != points) {
-      className += ' Score--bounce'
-      setTimeout(() => this.setState({points: points}), 820)
+class Score extends Component {
+  render() {
+    let diffClass = 'Score-diff'
+    let diffText = this.props.diff.toString()
+
+    if (this.props.diff == 0) {
+      diffClass += ' Score-diff--wrong'
+    } else {
+      diffText = `+ ${diffText}`
     }
 
-    return <div className={className}>
-      Score: {points}
+    return <div className="Score">
+      <Animated className="Score-points"
+        animationClassName="Score--bounce"
+        animate={this.props.diff != 0}>
+          Score: {this.props.points}
+      </Animated>
+      <Animated className={diffClass}
+        animationClassName="Score--fade"
+        animate={(this.props.wrong + this.props.correct) != 0}>
+          {diffText}
+      </Animated>
     </div>
   }
 }

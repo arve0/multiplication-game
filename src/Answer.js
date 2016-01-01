@@ -6,14 +6,32 @@ import './Answer.less'
 class Answer extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
   }
 
   changeHandler(e) {
     const val = parseInt(e.target.value.trim())
+
     if (val === this.props.answer) {
-      this.props.dispatch({ type: 'CORRECT_ANSWER' })
-      this.props.dispatch({ type: 'CREATE_QUESTION' })
-      this.refs.input.value = ''
+      const inc = this.props.subsequentCorrect * 10;
+      // correct
+      clearTimeout(this.wrongTimeout)
+      this.props.dispatch({
+        type: 'CORRECT_ANSWER',
+        inc: inc })
+      setTimeout(() => {
+        this.refs.input.value = ''
+        this.props.dispatch({ type: 'CREATE_QUESTION' })
+      }, 200)
+    } else {
+      // debounce
+      clearTimeout(this.wrongTimeout)
+      // submit in 1 second if no change
+      this.wrongTimeout = setTimeout(() => {
+        this.refs.input.value = ''
+        this.props.dispatch({ type: 'WRONG_ANSWER' })
+        this.props.dispatch({ type: 'CREATE_QUESTION' })
+      }, 1000)
     }
   }
 
@@ -31,4 +49,10 @@ class Answer extends Component {
 }
 
 
-export default connect(state => state.question)(Answer)
+const mapStoreToProps = (state) => {
+  return {
+    answer: state.question.answer,
+    subsequentCorrect: state.score.subsequentCorrect }
+}
+
+export default connect(mapStoreToProps)(Answer)
