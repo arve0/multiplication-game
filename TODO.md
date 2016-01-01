@@ -1,0 +1,5 @@
+- [ ] More game modes:
+  - [ ] Non random, 1*1, 1*2, 1*3, ...
+  - [ ] Addition.
+  - [ ] Subtraction.
+- [ ] Remember wrong answers, repeat in given time.
