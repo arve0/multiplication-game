@@ -1,0 +1,14 @@
+.DS_Store
+node_modules
+npm-debug.log
+.babelrc
+.eslintrc
+LICENSE
+README.md
+devServer.js
+dist/
+package.json
+src/
+tests/
+webpack.config.dev.js
+webpack.config.prod.js
