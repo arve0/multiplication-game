@@ -2,7 +2,7 @@
 
 A simple game made with [React] and [redux]. [Play it!]
 
-![](demo.gif)
+<img src="demo.gif" width="300">
 
 ## Develop
 
@@ -23,9 +23,8 @@ Distribute files in [dist](dist).
 
 [MIT](LICENSE).
 
-Scaffolded with [react-transform-boilerplate] [CC0 (public domain)].
+Scaffolded with [react-transform-boilerplate](http://github.com/gaearon/react-transform-boilerplate) (CC0 public domain).
 
 [React]: https://facebook.github.io/react/index.html
 [redux]: http://redux.js.org/
 [Play it!]: http://arve0.github.io/multiplication-game
-[react-transform-boilerplate]: http://github.com/gaearon/react-transform-boilerplate
