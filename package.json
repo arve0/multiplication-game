@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "react": "^0.14.5",
+    "react-animate-on-change": "^0.1.1",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.5",
     "redux": "^3.0.5",

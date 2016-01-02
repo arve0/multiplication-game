@@ -1,31 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Animated from './Animated.js'
+import AnimateOnChange from 'react-animate-on-change'
 import './Score.less'
 
 
 class Score extends Component {
   render() {
+    let diffText = `+ ${this.props.diff}`
     let diffClass = 'Score-diff'
-    let diffText = this.props.diff.toString()
 
     if (this.props.diff == 0) {
       diffClass += ' Score-diff--wrong'
-    } else {
-      diffText = `+ ${diffText}`
     }
 
     return <div className="Score">
-      <Animated className="Score-points"
+      <AnimateOnChange baseClassName="Score-points"
         animationClassName="Score--bounce"
         animate={this.props.diff != 0}>
           Score: {this.props.points}
-      </Animated>
-      <Animated className={diffClass}
+      </AnimateOnChange>
+      <AnimateOnChange baseClassName={diffClass}
         animationClassName="Score--fade"
         animate={(this.props.wrong + this.props.correct) != 0}>
           {diffText}
-      </Animated>
+      </AnimateOnChange>
     </div>
   }
 }
