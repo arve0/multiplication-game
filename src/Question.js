@@ -6,9 +6,12 @@ const style = {
 }
 
 const Question = (props) =>
-  <div className="Question" style={style}>
-    <div className="text">{props.question}</div>
+  <div className='Question' style={style}>
+    <div className='text'>{props.question}</div>
   </div>
 
+Question.propTypes = {
+  question: React.PropTypes.string.isRequired
+}
 
 export default connect(state => state.question)(Question)

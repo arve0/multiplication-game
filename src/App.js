@@ -17,7 +17,7 @@ const style = {
 }
 
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     // predictable random numbers
@@ -28,16 +28,19 @@ class App extends Component {
     props.dispatch({ type: 'CREATE_QUESTION' })
   }
 
-  render() {
+  render () {
     return (
-      <div className="App" style={style}>
+      <div className='App' style={style}>
         <Question/>
         <Answer/>
         <Score/>
       </div>
     )
   }
+}
 
+App.propTypes = {
+  dispatch: React.PropTypes.func.isRequired
 }
 
 export default connect()(App)

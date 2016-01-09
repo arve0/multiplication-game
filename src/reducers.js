@@ -8,10 +8,10 @@ import seedrandom from 'seedrandom'  // predictable seeded random
  * @returns {Object} - With props question (text) and answer (int).
  */
 let rng = seedrandom()  // autoseed from time, dom state and entropy
-const createQuestion = (min=0, max=10) => {
+const createQuestion = (min = 0, max = 10) => {
   max += 1  // random [0,1)
-  const x = parseInt(rng() * (max - min) + min)
-  const y = parseInt(rng() * (max - min) + min)
+  const x = parseInt(rng() * (max - min) + min, 10)
+  const y = parseInt(rng() * (max - min) + min, 10)
   return { question: `${x} x ${y}`,
            answer: x * y }
 }

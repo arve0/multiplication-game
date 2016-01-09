@@ -2,18 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './Answer.less'
 
-
 class Answer extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {}
   }
 
-  changeHandler(e) {
-    const val = parseInt(e.target.value.trim())
+  changeHandler (e) {
+    const val = parseInt(e.target.value.trim(), 10)
 
     if (val === this.props.answer) {
-      const inc = this.props.subsequentCorrect * 10;
+      const inc = this.props.subsequentCorrect * 10
       // correct
       clearTimeout(this.wrongTimeout)
       this.props.dispatch({
@@ -35,19 +34,23 @@ class Answer extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.refs.input.focus()
   }
 
-  render() {
+  render () {
     return <input
-      className="Answer"
-      type="number"
-      ref="input"
+      className='Answer'
+      type='number'
+      ref='input'
       onChange={this.changeHandler.bind(this)} />
   }
 }
-
+Answer.propTypes = {
+  answer: React.PropTypes.int.isRequired,
+  subsequentCorrect: React.PropTypes.int.isRequired,
+  dispatch: React.PropTypes.func.isRequired
+}
 
 const mapStoreToProps = (state) => {
   return {
