@@ -14,23 +14,23 @@ class Score extends Component {
 
     return <div className='Score'>
       <AnimateOnChange baseClassName='Score-points'
-    animationClassName='Score--bounce'
-    animate={this.props.diff !== 0}>
+        animationClassName='Score--bounce'
+        animate={this.props.diff !== 0}>
           Score: {this.props.points}
       </AnimateOnChange>
       <AnimateOnChange baseClassName={diffClass}
-    animationClassName='Score--fade'
-    animate={(this.props.wrong + this.props.correct) !== 0}>
+        animationClassName='Score--fade'
+        animate={(this.props.wrong + this.props.correct) !== 0}>
           {diffText}
       </AnimateOnChange>
     </div>
   }
 }
 Score.propTypes = {
-  diff: React.PropTypes.int.isRequired,
-  points: React.PropTypes.int.isRequired,
-  correct: React.PropTypes.int.isRequired,
-  wrong: React.PropTypes.int.isRequired
+  diff: React.PropTypes.number.isRequired,
+  points: React.PropTypes.number.isRequired,
+  correct: React.PropTypes.number.isRequired,
+  wrong: React.PropTypes.number.isRequired
 }
 
 export default connect(state => state.score)(Score)

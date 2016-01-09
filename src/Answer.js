@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './Answer.less'
+import { createQuestion, wrongAnswer, correctAnswer } from './actions.js'
 
 class Answer extends Component {
   constructor (props) {
@@ -15,12 +16,10 @@ class Answer extends Component {
       const inc = this.props.subsequentCorrect * 10
       // correct
       clearTimeout(this.wrongTimeout)
-      this.props.dispatch({
-        type: 'CORRECT_ANSWER',
-        inc: inc })
+      this.props.dispatch(correctAnswer(inc))
       setTimeout(() => {
         this.refs.input.value = ''
-        this.props.dispatch({ type: 'CREATE_QUESTION' })
+        this.props.dispatch(createQuestion())
       }, 200)
     } else {
       // debounce
@@ -28,8 +27,8 @@ class Answer extends Component {
       // submit in 1 second if no change
       this.wrongTimeout = setTimeout(() => {
         this.refs.input.value = ''
-        this.props.dispatch({ type: 'WRONG_ANSWER' })
-        this.props.dispatch({ type: 'CREATE_QUESTION' })
+        this.props.dispatch(wrongAnswer())
+        this.props.dispatch(createQuestion())
       }, 1000)
     }
   }
@@ -47,8 +46,8 @@ class Answer extends Component {
   }
 }
 Answer.propTypes = {
-  answer: React.PropTypes.int.isRequired,
-  subsequentCorrect: React.PropTypes.int.isRequired,
+  answer: React.PropTypes.number.isRequired,
+  subsequentCorrect: React.PropTypes.number.isRequired,
   dispatch: React.PropTypes.func.isRequired
 }
 

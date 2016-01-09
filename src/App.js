@@ -3,6 +3,7 @@ import Question from './Question.js'
 import Answer from './Answer.js'
 import Score from './Score.js'
 import { connect } from 'react-redux'
+import { seed, createQuestion } from './actions.js'
 
 const style = {
   position: 'fixed',
@@ -21,11 +22,8 @@ class App extends Component {
     super(props)
 
     // predictable random numbers
-    props.dispatch({
-      type: 'SEED_QUESTION',
-      seed: 'evra'
-    })
-    props.dispatch({ type: 'CREATE_QUESTION' })
+    props.dispatch(seed('evra'))
+    props.dispatch(createQuestion())
   }
 
   render () {
