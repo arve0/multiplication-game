@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Question from './Question.js'
-import Answer from './Answer.js'
 import Score from './Score.js'
 import { connect } from 'react-redux'
 import { seed, createQuestion } from './actions.js'
+import NumberPad from './NumberPad.js'
 
 const style = {
   position: 'fixed',
@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div className='App' style={style}>
         <Question/>
-        <Answer/>
+        <NumberPad/>
         <Score/>
       </div>
     )

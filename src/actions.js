@@ -35,3 +35,22 @@ export function correctAnswer (inc) {
     inc: inc
   }
 }
+
+/**
+ * NUMBER CLICKED
+ */
+export function numberClicked (num) {
+  return {
+    type: 'NUMBER_CLICKED',
+    num: num
+  }
+}
+
+/**
+ * BACKSPACE
+ */
+export function backspace () {
+  return {
+    type: 'BACKSPACE'
+  }
+}
