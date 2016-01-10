@@ -54,3 +54,12 @@ export function backspace () {
     type: 'BACKSPACE'
   }
 }
+
+/**
+ * DELETE_ANSWER
+ */
+export function deleteAnswer () {
+  return {
+    type: 'DELETE_ANSWER'
+  }
+}

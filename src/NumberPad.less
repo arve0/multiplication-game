@@ -1,18 +1,21 @@
 .NumberPad {
-  margin: 15px;
+  margin-bottom: 10px;
 }
 .NumberPad-row {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.NumberPad-row span {
+.NumberPad-row button {
   margin: 1px;
-  padding: 20px;
+  border: none;
   border-radius: 3px;
   background-color: #000;
   color: #fff;
   cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 }
 .NumberPad-num--clicked {
   animation: NumberPad-num--clicked-keyframes 0.5s;

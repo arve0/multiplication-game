@@ -72,6 +72,8 @@ const answer = (state = '', action) => {
       return state.substring(0, state.length - 1)
     case 'CREATE_QUESTION':
       return ''
+    case 'DELETE_ANSWER':
+      return ''
     default:
       return state
   }

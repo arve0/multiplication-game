@@ -2,20 +2,33 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createQuestion, wrongAnswer, correctAnswer } from './actions.js'
 
-const style = {
-  fontSize: 100
-}
-
 class Question extends Component {
   constructor (props) {
     super(props)
     this.state = {}
+    this.state.fontSize = 60
     this.answer = this.answer.bind(this)
+    this.setFontSize = this.setFontSize.bind(this)
+  }
+  setFontSize () {
+    let s = Math.floor((window.innerHeight - 40) / 7)
+    this.setState({fontSize: s})
+  }
+  componentDidMount () {
+    this.setFontSize()
+    window.addEventListener('resize', this.setFontSize)
+  }
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.setFontSize)
   }
   componentWillReceiveProps (nextProps) {
-    if (nextProps.answer === '' ||
-        nextProps.answer === this.props.answer) {
-      // do nothing on empty answer or not changed
+    if (nextProps.answer === '') {
+      // do not timeout on cleared answer
+      clearTimeout(this.wrongTimeout)
+      return
+    }
+    if (nextProps.answer === this.props.answer) {
+      // not changed, do nothing
       return
     }
     if (nextProps.answer === this.props.question.answer) {
@@ -38,9 +51,11 @@ class Question extends Component {
     setTimeout(() => dispatch(createQuestion()), 500)
   }
   render () {
-    const question = this.props.question.question + ' = ' + this.props.answer
-    return <div className='Question' style={style}>
-      <div className='text'>{question}</div>
+    const question = this.props.question.question
+    const answer =  '= ' + this.props.answer
+    return <div className='Question' style={{fontSize: this.state.fontSize}}>
+      <div>{question}</div>
+      <div>{answer}</div>
     </div>
   }
 }

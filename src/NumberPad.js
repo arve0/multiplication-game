@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './NumberPad.less'
-import { numberClicked, backspace } from './actions.js'
+import { numberClicked, backspace, deleteAnswer } from './actions.js'
 import keymaster from 'keymaster'
+
+/**
+ * avoid 300ms debounce on touch devices
+ */
+import fastclick from 'fastclick'
+fastclick.attach(document.body)
 
 class NumberPad extends Component {
   constructor (props) {
@@ -12,12 +18,26 @@ class NumberPad extends Component {
       [1, 2, 3],
       [4, 5, 6],
       [7, 8, 9],
-      [0, '⇦']
+      ['⇦', 0, '☒']
     ]
+    this.state.buttonSize = 40
+    this.setButtonSize = this.setButtonSize.bind(this)
+  }
+  setButtonSize () {
+    let s = Math.floor((window.innerHeight - 40) / 7)
+    this.setState({buttonSize: s})
+  }
+  componentDidMount () {
+    this.setButtonSize()
+    window.addEventListener('resize', this.setButtonSize)
+  }
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.setButtonSize)
   }
   render () {
     return <div className='NumberPad'>
-      {this.state.numbers.map((nums, i) => <Row key={i} nums={nums} />)}
+      {this.state.numbers.map((nums, i) =>
+        <Row key={i} nums={nums} buttonSize={this.state.buttonSize} />)}
     </div>
   }
 }
@@ -25,7 +45,8 @@ class NumberPad extends Component {
 class Row extends Component {
   render () {
     return <div className='NumberPad-row'>
-      {this.props.nums.map(num => <Num key={num} num={num} />)}
+      {this.props.nums.map(num =>
+        <Num key={num} num={num} buttonSize={this.props.buttonSize} />)}
     </div>
   }
 }
@@ -41,6 +62,8 @@ class UnconnectedNum extends Component {
     this.handleClick = this.handleClick.bind(this)
     if (this.props.num === '⇦') {
       this.state.key = 'backspace'
+    } else if (this.props.num === '☒') {
+      this.state.key = 'x'
     } else {
       this.state.key = props.num.toString()
     }
@@ -60,18 +83,23 @@ class UnconnectedNum extends Component {
     }, 510)
     if (this.state.key === 'backspace') {
       this.props.dispatch(backspace())
+    } else if (this.state.key === 'x') {
+      console.log('jej')
+      this.props.dispatch(deleteAnswer())
     } else {
       this.props.dispatch(numberClicked(this.props.num))
     }
   }
   render () {
     const clicked = this.state.clicked
+    const size = this.props.buttonSize
 
-    return <span
+    return <button
+      style={{width: size, height: size, fontSize: size / 3}}
       onClick={this.handleClick}
       className={clicked ? 'NumberPad-num--clicked' : ''}>
         {this.props.num}
-    </span>
+    </button>
   }
 }
 UnconnectedNum.propTypes = {
