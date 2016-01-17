@@ -28,7 +28,6 @@ const question = (state = questionInitialState, action) => {
       rng = seedrandom(action.seed)
       return { ...state, seed: action.seed }
     case 'CREATE_QUESTION':
-      console.log(state.question)
       return { ...state, ...createQuestion(), i: state.i + 1 }
     default:
       return state
@@ -40,7 +39,9 @@ const scoreInitialState = {
   wrong: 0,
   subsequentCorrect: 1,
   diff: 0,
-  points: 0
+  points: 0,
+  users: [],
+  aboveBelow: {}
 }
 const score = (state = scoreInitialState, action) => {
   switch (action.type) {
@@ -57,6 +58,14 @@ const score = (state = scoreInitialState, action) => {
         diff: 0,
         subsequentCorrect: 1,
         wrong: state.wrong + 1 }
+
+    case 'USERS':
+      return { ...state,
+        users: action.users }
+
+    case 'ABOVE_BELOW':
+      return { ...state,
+        aboveBelow: action.ab }
 
     default:
       return state
@@ -79,4 +88,19 @@ const answer = (state = '', action) => {
   }
 }
 
-export default { question, score, answer }
+const initialLoginState = {
+  uid: '',
+  nickname: ''
+}
+const login = (state = initialLoginState, action) => {
+  switch (action.type) {
+    case 'UID':
+      return { ...state, uid: action.uid }
+    case 'NICKNAME':
+      return { ...state, nickname: action.name }
+    default:
+      return state
+  }
+}
+
+export default { question, score, answer, login }

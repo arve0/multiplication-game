@@ -7,12 +7,6 @@ class Question extends Component {
     super(props)
     this.state = {}
     this.state.fontSize = 60
-    this.answer = this.answer.bind(this)
-    this.setFontSize = this.setFontSize.bind(this)
-  }
-  setFontSize () {
-    let s = Math.floor((window.innerHeight - 40) / 7)
-    this.setState({fontSize: s})
   }
   componentDidMount () {
     this.setFontSize()
@@ -44,15 +38,19 @@ class Question extends Component {
       }, 1000)
     }
   }
-  answer (correct) {
+  answer = (correct) => {
     clearTimeout(this.wrongTimeout)
     const dispatch = this.props.dispatch
     dispatch(correct)
     setTimeout(() => dispatch(createQuestion()), 500)
-  }
+  };
+  setFontSize = () => {
+    let s = Math.floor((window.innerHeight - 40) / 7)
+    this.setState({fontSize: s})
+  };
   render () {
     const question = this.props.question.question
-    const answer =  '= ' + this.props.answer
+    const answer = '= ' + this.props.answer
     return <div className='Question' style={{fontSize: this.state.fontSize}}>
       <div>{question}</div>
       <div>{answer}</div>
@@ -67,12 +65,10 @@ Question.propTypes = {
   dispatch: React.PropTypes.func.isRequired
 }
 
-const mapStoreToProps = (state) => {
-  return {
-    question: state.question,
-    answer: state.answer,
-    subsequentCorrect: state.score.subsequentCorrect
-  }
-}
+const mapStoreToProps = (state) => ({
+  question: state.question,
+  answer: state.answer,
+  subsequentCorrect: state.score.subsequentCorrect
+})
 
 export default connect(mapStoreToProps)(Question)

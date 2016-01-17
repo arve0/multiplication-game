@@ -1,36 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import AnimateOnChange from 'react-animate-on-change'
 import './Score.less'
 
-class Score extends Component {
-  render () {
-    let diffText = `+ ${this.props.diff}`
-    let diffClass = 'Score-diff'
+const Score = ({diff, points}) => {
+  let diffText = `+ ${diff}`
+  let diffClass = 'Score-diff'
 
-    if (this.props.diff === 0) {
-      diffClass += ' Score-diff--wrong'
-    }
-
-    return <div className='Score'>
-      <AnimateOnChange baseClassName='Score-points'
-        animationClassName='Score--bounce'
-        animate={this.props.diff !== 0}>
-          Score: {this.props.points}
-      </AnimateOnChange>
-      <AnimateOnChange baseClassName={diffClass}
-        animationClassName='Score--fade'
-        animate={(this.props.wrong + this.props.correct) !== 0}>
-          {diffText}
-      </AnimateOnChange>
-    </div>
+  if (diff === 0) {
+    diffClass += ' Score-diff--wrong'
   }
+
+  return <div className='Score'>
+    <AnimateOnChange baseClassName='Score-points'
+      animationClassName='Score--bounce'
+      animate={diff !== 0}>
+        Score: {points}
+    </AnimateOnChange>
+    <div className={diffClass}>
+        {diffText}
+    </div>
+  </div>
 }
 Score.propTypes = {
   diff: React.PropTypes.number.isRequired,
-  points: React.PropTypes.number.isRequired,
-  correct: React.PropTypes.number.isRequired,
-  wrong: React.PropTypes.number.isRequired
+  points: React.PropTypes.number.isRequired
 }
 
-export default connect(state => state.score)(Score)
+const mapStateToProps = s => ({
+  diff: s.score.diff,
+  points: s.score.points
+})
+
+export default connect(mapStateToProps)(Score)

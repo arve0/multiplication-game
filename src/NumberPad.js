@@ -18,14 +18,9 @@ class NumberPad extends Component {
       [1, 2, 3],
       [4, 5, 6],
       [7, 8, 9],
-      ['⇦', 0, '☒']
+      ['⇦', 0, 'x']
     ]
     this.state.buttonSize = 40
-    this.setButtonSize = this.setButtonSize.bind(this)
-  }
-  setButtonSize () {
-    let s = Math.floor((window.innerHeight - 40) / 7)
-    this.setState({buttonSize: s})
   }
   componentDidMount () {
     this.setButtonSize()
@@ -34,6 +29,10 @@ class NumberPad extends Component {
   componentWillUnmount () {
     window.removeEventListener('resize', this.setButtonSize)
   }
+  setButtonSize = () => {
+    let s = Math.floor((window.innerHeight - 40) / 7)
+    this.setState({buttonSize: s})
+  };
   render () {
     return <div className='NumberPad'>
       {this.state.numbers.map((nums, i) =>
@@ -51,7 +50,8 @@ class Row extends Component {
   }
 }
 Row.propTypes = {
-  nums: React.PropTypes.array.isRequired
+  nums: React.PropTypes.array.isRequired,
+  buttonSize: React.PropTypes.number.isRequired
 }
 
 class UnconnectedNum extends Component {
@@ -59,10 +59,9 @@ class UnconnectedNum extends Component {
     super(props)
     this.state = {}
     this.state.clicked = false
-    this.handleClick = this.handleClick.bind(this)
     if (this.props.num === '⇦') {
       this.state.key = 'backspace'
-    } else if (this.props.num === '☒') {
+    } else if (this.props.num === 'x') {
       this.state.key = 'x'
     } else {
       this.state.key = props.num.toString()
@@ -76,7 +75,7 @@ class UnconnectedNum extends Component {
   componentWillUnmount () {
     keymaster.unbind(this.state.key)
   }
-  handleClick () {
+  handleClick = () => {
     this.setState({clicked: true})
     setTimeout(() => {
       this.setState({clicked: false})
@@ -84,12 +83,11 @@ class UnconnectedNum extends Component {
     if (this.state.key === 'backspace') {
       this.props.dispatch(backspace())
     } else if (this.state.key === 'x') {
-      console.log('jej')
       this.props.dispatch(deleteAnswer())
     } else {
       this.props.dispatch(numberClicked(this.props.num))
     }
-  }
+  };
   render () {
     const clicked = this.state.clicked
     const size = this.props.buttonSize
@@ -104,7 +102,8 @@ class UnconnectedNum extends Component {
 }
 UnconnectedNum.propTypes = {
   num: React.PropTypes.any.isRequired,
-  dispatch: React.PropTypes.func.isRequired
+  dispatch: React.PropTypes.func.isRequired,
+  buttonSize: React.PropTypes.number.isRequired
 }
 const Num = connect()(UnconnectedNum)
 

@@ -63,3 +63,43 @@ export function deleteAnswer () {
     type: 'DELETE_ANSWER'
   }
 }
+
+/**
+ * LOGIN
+ */
+export function uid (uid) {
+  return {
+    type: 'UID',
+    uid: uid
+  }
+}
+
+/**
+ * NICKNAME
+ */
+export function nickname (name) {
+  return {
+    type: 'NICKNAME',
+    name
+  }
+}
+
+/**
+ * USERS
+ */
+export function users (users) {
+  return {
+    type: 'USERS',
+    users
+  }
+}
+
+/**
+ * ABOVE_BELOW
+ */
+export function aboveBelow (ab) {
+  return {
+    type: 'ABOVE_BELOW',
+    ab
+  }
+}
