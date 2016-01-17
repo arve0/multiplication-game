@@ -5,10 +5,10 @@ import './Nickname.less'
 
 const Nickname = ({dispatch}) => {
   const handleSubmit = (event) => {
+    event.target.nickname.blur()
     event.preventDefault()
     const name = event.target.nickname.value
     dispatch(nickname(name))
-    event.target.nickname.blur()
   }
   return (
     <form className='Nickname' onSubmit={handleSubmit}>
